@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Настройка токенов для Telegram бота</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .form-group .help-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .form-group .help-link:hover {
+            text-decoration: underline;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        
+        .output h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .output pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .copy-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .copy-btn:hover {
+            background: #38a169;
+        }
+        
+        .status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .emoji {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">🤖</span>Настройка токенов</h1>
+            <p>Введите ваши API ключи для настройки Telegram бота</p>
+        </div>
+        
+        <form id="tokenForm">
+            <div class="form-group">
+                <label for="telegramToken">
+                    <span class="emoji">📱</span>Telegram Bot Token
+                </label>
+                <input 
+                    type="text" 
+                    id="telegramToken" 
+                    name="telegramToken"
+                    placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+                    required
+                >
+                <div class="help-text">
+                    Получите у <a href="https://t.me/BotFather" target="_blank" class="help-link">@BotFather</a> в Telegram
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="openaiToken">
+                    <span class="emoji">🧠</span>OpenAI API Key
+                </label>
+                <input 
+                    type="text" 
+                    id="openaiToken" 
+                    name="openaiToken"
+                    placeholder="sk-..."
+                    required
+                >
+                <div class="help-text">
+                    Получите на <a href="https://platform.openai.com/api-keys" target="_blank" class="help-link">platform.openai.com</a>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="perplexityToken">
+                    <span class="emoji">🔍</span>Perplexity API Key
+                </label>
+                <input 
+                    type="text" 
+                    id="perplexityToken" 
+                    name="perplexityToken"
+                    placeholder="pplx-..."
+                >
+                <div class="help-text">
+                    Получите на <a href="https://www.perplexity.ai/settings/api" target="_blank" class="help-link">perplexity.ai/settings/api</a> (опционально)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="webhookUrl">
+                    <span class="emoji">🌐</span>Webhook URL
+                </label>
+                <input 
+                    type="url" 
+                    id="webhookUrl" 
+                    name="webhookUrl"
+                    placeholder="https://your-app.vercel.app"
+                >
+                <div class="help-text">
+                    URL вашего Vercel приложения (заполнится автоматически)
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">
+                    <span class="emoji">✅</span>Сгенерировать конфигурацию
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                    <span class="emoji">🗑️</span>Очистить
+                </button>
+            </div>
+        </form>
+        
+        <div id="output" class="output">
+            <h3><span class="emoji">📋</span>Переменные окружения для Vercel:</h3>
+            <pre id="envVars"></pre>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Копировать</button>
+            
+            <h3 style="margin-top: 20px;"><span class="emoji">🔧</span>Команды для Vercel CLI:</h3>
+            <pre id="cliCommands"></pre>
+            <button class="copy-btn" onclick="copyCommands()">📋 Копировать команды</button>
+        </div>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.getElementById('tokenForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const tokens = {
+                telegram: formData.get('telegramToken').trim(),
+                openai: formData.get('openaiToken').trim(),
+                perplexity: formData.get('perplexityToken').trim(),
+                webhook: formData.get('webhookUrl').trim()
+            };
+            
+            // Валидация
+            if (!tokens.telegram || !tokens.openai) {
+                showStatus('Заполните обязательные поля: Telegram Token и OpenAI Key', 'error');
+                return;
+            }
+            
+            // Проверка формата Telegram токена
+            if (!tokens.telegram.match(/^\d+:[A-Za-z0-9_-]+$/)) {
+                showStatus('Неверный формат Telegram токена', 'error');
+                return;
+            }
+            
+            // Проверка формата OpenAI ключа
+            if (!tokens.openai.startsWith('sk-')) {
+                showStatus('OpenAI ключ должен начинаться с "sk-"', 'error');
+                return;
+            }
+            
+            generateConfig(tokens);
+        });
+        
+        function generateConfig(tokens) {
+            // Генерируем .env файл
+            let envContent = `# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN=${tokens.telegram}
+OPENAI_API_KEY=${tokens.openai}`;
+            
+            if (tokens.perplexity) {
+                envContent += `\nPERPLEXITY_API_KEY=${tokens.perplexity}`;
+            }
+            
+            if (tokens.webhook) {
+                envContent += `\nWEBHOOK_URL=${tokens.webhook}`;
+            }
+            
+            envContent += `\nPORT=3000`;
+            
+            // Генерируем CLI команды
+            let cliCommands = `# Добавление переменных через Vercel CLI
+vercel env add TELEGRAM_BOT_TOKEN
+# Введите: ${tokens.telegram}
+
+vercel env add OPENAI_API_KEY  
+# Введите: ${tokens.openai}`;
+            
+            if (tokens.perplexity) {
+                cliCommands += `\n\nvercel env add PERPLEXITY_API_KEY
+# Введите: ${tokens.perplexity}`;
+            }
+            
+            cliCommands += `\n\n# Деплой проекта
+vercel --prod`;
+            
+            // Отображаем результат
+            document.getElementById('envVars').textContent = envContent;
+            document.getElementById('cliCommands').textContent = cliCommands;
+            document.getElementById('output').style.display = 'block';
+            
+            showStatus('Конфигурация сгенерирована! Скопируйте и используйте в Vercel.', 'success');
+            
+            // Прокручиваем к результату
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function copyToClipboard() {
+            const text = document.getElementById('envVars').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus('Переменные окружения скопированы!', 'success');
+            });
+        }
+        
+        function copyCommands() {
+            const text = document.getElementById('cliCommands').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus('CLI команды скопированы!', 'success');
+            });
+        }
+        
+        function clearForm() {
+            document.getElementById('tokenForm').reset();
+            document.getElementById('output').style.display = 'none';
+            document.getElementById('status').innerHTML = '';
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+            
+            // Автоматически скрываем через 5 секунд
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 5000);
+        }
+        
+        // Автозаполнение webhook URL
+        document.addEventListener('DOMContentLoaded', function() {
+            // Пытаемся определить URL из localStorage или других источников
+            const savedWebhook = localStorage.getItem('webhookUrl');
+            if (savedWebhook) {
+                document.getElementById('webhookUrl').value = savedWebhook;
+            }
+        });
+        
+        // Сохраняем webhook URL при изменении
+        document.getElementById('webhookUrl').addEventListener('change', function(e) {
+            localStorage.setItem('webhookUrl', e.target.value);
+        });
+    </script>
+</body>
+</html>

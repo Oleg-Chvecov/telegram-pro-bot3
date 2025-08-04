@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деплой Telegram бота</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .step { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .button { background: #0070f3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Деплой Telegram бота на Vercel</h1>
+    
+    <div class="step">
+        <h3>1. Скачайте код из v0</h3>
+        <p>Нажмите "Download Code" в правом верхнем углу v0</p>
+    </div>
+
+    <div class="step">
+        <h3>2. Быстрые ссылки</h3>
+        <a href="https://vercel.com/new" class="button" target="_blank">🚀 Создать проект на Vercel</a>
+        <a href="https://github.com/new" class="button" target="_blank">📁 Создать репозиторий GitHub</a>
+        <a href="https://stackblitz.com/fork/node" class="button" target="_blank">⚡ Stackblitz (альтернатива)</a>
+    </div>
+
+    <div class="step">
+        <h3>3. Переменные окружения</h3>
+        <div class="warning">
+            <p><strong>Добавьте эти переменные в Vercel:</strong></p>
+            <ul>
+                <li><code>TELEGRAM_BOT_TOKEN</code> - от @BotFather</li>
+                <li><code>OPENAI_API_KEY</code> - тот же что в v0</li>
+                <li><code>PERPLEXITY_API_KEY</code> - тот же что в v0</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>4. После деплоя</h3>
+        <p>Откройте эти URL (замените YOUR-APP на ваш URL):</p>
+        <ul>
+            <li><code>https://YOUR-APP.vercel.app/api/setup-webhook</code> - настроить webhook</li>
+            <li><code>https://YOUR-APP.vercel.app/api/status</code> - проверить статус</li>
+        </ul>
+    </div>
+
+    <div class="step success">
+        <h3>✅ Готово!</h3>
+        <p>Ваш бот работает! Напишите ему в Telegram для проверки.</p>
+    </div>
+
+    <script>
+        // Автоматическое обновление ссылок
+        function updateLinks() {
+            const appUrl = prompt("Введите URL вашего Vercel приложения (например: https://my-bot.vercel.app):");
+            if (appUrl) {
+                document.querySelectorAll('code').forEach(code => {
+                    if (code.textContent.includes('YOUR-APP')) {
+                        code.textContent = code.textContent.replace('YOUR-APP.vercel.app', appUrl.replace('https://', ''));
+                    }
+                });
+            }
+        }
+        
+        // Добавляем кнопку для обновления ссылок
+        const button = document.createElement('button');
+        button.textContent = '🔗 Обновить ссылки';
+        button.className = 'button';
+        button.onclick = updateLinks;
+        document.body.appendChild(button);
+    </script>
+</body>
+</html>
